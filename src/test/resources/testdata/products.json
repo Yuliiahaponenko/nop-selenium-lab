@@ -1,0 +1,17 @@
+[
+  {
+    "name": "laptop",
+    "category": "Computers",
+    "expectedMinPrice": 0
+  },
+  {
+    "name": "phone",
+    "category": "Electronics",
+    "expectedMinPrice": 0
+  },
+  {
+    "name": "book",
+    "category": "Books",
+    "expectedMinPrice": 0
+  }
+]
