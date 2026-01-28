@@ -12,8 +12,6 @@ public class OrderHistoryPage extends BasePage {
     // Order list elements - no IDs available, using CSS
     private static final By ORDER_ROWS = By.cssSelector(".order-list .order-item");
     private static final By ORDER_NUMBER_LINKS = By.cssSelector(".order-number a");
-    private static final By ORDER_STATUS = By.cssSelector(".order-status");
-    private static final By ORDER_TOTAL = By.cssSelector(".order-total");
 
     public List<WebElement> getOrderRows() {
         try {

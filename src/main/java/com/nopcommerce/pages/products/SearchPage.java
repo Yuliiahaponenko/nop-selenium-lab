@@ -12,7 +12,6 @@ public class SearchPage extends BasePage {
     // Product items - no IDs available, using CSS
     private static final By PRODUCT_ITEMS = By.cssSelector(".product-item");
     private static final By PRODUCT_TITLE = By.cssSelector(".product-title a");
-    private static final By PRODUCT_PRICE = By.cssSelector(".actual-price");
     private static final By NO_RESULTS_MESSAGE = By.cssSelector(".no-result");
 
     public List<WebElement> getProductItems() {
