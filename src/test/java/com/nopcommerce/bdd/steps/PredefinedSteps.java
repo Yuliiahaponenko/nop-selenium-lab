@@ -298,8 +298,36 @@ public class PredefinedSteps {
 
     @Then("I wait for element with xpath {string} to be present")
     public void iWaitForElementWithXpathToBePresent(String xpath) {
-        Waiter.waitForElementPresent(driver, By.xpath(xpath));
-        logger.info("Waited for element to be present: {}", xpath);
+        int maxRetries = 3;
+        int retryCount = 0;
+        boolean elementFound = false;
+        
+        while (retryCount < maxRetries && !elementFound) {
+            try {
+                Waiter.waitForElementPresent(driver, By.xpath(xpath));
+                elementFound = true;
+                logger.info("Waited for element to be present: {} (attempt {})", xpath, retryCount + 1);
+            } catch (org.openqa.selenium.TimeoutException e) {
+                retryCount++;
+                logger.warn("Element not found on attempt {}/{}: {}", retryCount, maxRetries, xpath);
+                
+                if (retryCount < maxRetries) {
+                    logger.info("Refreshing page and retrying...");
+                    driver.navigate().refresh();
+                    try {
+                        Thread.sleep(2000); // Wait for page to refresh
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                    }
+                } else {
+                    logger.error("Element not found after {} attempts: {}", maxRetries, xpath);
+                    throw new AssertionError(
+                        String.format("Element with xpath '%s' was not present after %d attempts with page refreshes", 
+                        xpath, maxRetries), e
+                    );
+                }
+            }
+        }
     }
 
     @Then("I wait for element with id {string} to be present")

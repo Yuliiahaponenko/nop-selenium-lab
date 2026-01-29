@@ -28,9 +28,22 @@ public class Hooks {
     }
 
     @Before(order = 1)
-    public void clearCookies() {
+    public void clearCookies(Scenario scenario) {
+        // Skip cookie clearing if scenario is tagged with @preserve-cookies
+        if (scenario.getSourceTagNames().contains("@preserve-cookies")) {
+            logger.debug("Skipping cookie clear for scenario with @preserve-cookies tag: {}", scenario.getName());
+            return;
+        }
+        
+        // Skip cookie clearing if scenario is tagged with @skip-cookie-clear
+        if (scenario.getSourceTagNames().contains("@skip-cookie-clear")) {
+            logger.debug("Skipping cookie clear for scenario with @skip-cookie-clear tag: {}", scenario.getName());
+            return;
+        }
+        
+        // Clear cookies for all other scenarios
         DriverManager.clearCookies();
-        logger.debug("Cleared cookies before scenario");
+        logger.debug("Cleared cookies before scenario: {}", scenario.getName());
     }
 
     @After(order = 1)

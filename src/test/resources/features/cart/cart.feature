@@ -13,12 +13,12 @@ Feature: Shopping Cart
     And I click on element with css "button[type='submit'].search-box-button"
     Then I wait for element with css ".product-item" to be present
     When I click on element with css ".product-title a"
-    Then I wait for element with id "add-to-cart-button" to be present
-    When I click on element with id "add-to-cart-button"
+    Then I wait for element with css "button.add-to-cart-button" to be present
+    When I click on element with css "button.add-to-cart-button"
     Then I wait for 3 seconds
     When I click on element with id "topcartlink"
-    Then I wait for element with css ".cart-item-row" to be present
-    And element with css ".cart-item-row" should be displayed
+    Then I wait for element with css "td.sku span.sku-number" to be present
+    And element with css "td.sku span.sku-number" should be displayed
 
   @predefined2
   Scenario: Add multiple different products to cart
@@ -26,16 +26,16 @@ Feature: Shopping Cart
     And I click on element with css "button[type='submit'].search-box-button"
     Then I wait for element with css ".product-item" to be present
     When I click on element with css ".product-title a"
-    Then I wait for element with id "add-to-cart-button" to be present
-    When I click on element with id "add-to-cart-button"
+    Then I wait for element with css "button.add-to-cart-button" to be present
+    When I click on element with css "button.add-to-cart-button"
     Then I wait for 3 seconds
     When I open url "https://nop-qa.portnov.com"
     And I type "phone" into element with id "small-searchterms"
     And I click on element with css "button[type='submit'].search-box-button"
     Then I wait for element with css ".product-item" to be present
     When I click on element with css ".product-title a"
-    Then I wait for element with id "add-to-cart-button" to be present
-    When I click on element with id "add-to-cart-button"
+    Then I wait for element with css "button.add-to-cart-button" to be present
+    When I click on element with css "button.add-to-cart-button"
     Then I wait for 3 seconds
     When I click on element with id "topcartlink"
     Then I should see 2 elements with xpath "//tr[@class='cart-item-row']"
@@ -47,8 +47,8 @@ Feature: Shopping Cart
     And I click on element with css "button[type='submit'].search-box-button"
     Then I wait for element with css ".product-item" to be present
     When I click on element with css ".product-title a"
-    Then I wait for element with id "add-to-cart-button" to be present
-    When I click on element with id "add-to-cart-button"
+    Then I wait for element with css "button.add-to-cart-button" to be present
+    When I click on element with css "button.add-to-cart-button"
     Then I wait for 3 seconds
     When I click on element with id "topcartlink"
     Then I wait for element with id "itemquantity" to be present
@@ -63,8 +63,8 @@ Feature: Shopping Cart
     And I click on element with css "button[type='submit'].search-box-button"
     Then I wait for element with css ".product-item" to be present
     When I click on element with css ".product-title a"
-    Then I wait for element with id "add-to-cart-button" to be present
-    When I click on element with id "add-to-cart-button"
+    Then I wait for element with css "button.add-to-cart-button" to be present
+    When I click on element with css "button.add-to-cart-button"
     Then I wait for 3 seconds
     When I click on element with id "topcartlink"
     Then I wait for element with id "itemquantity" to be present
@@ -79,8 +79,8 @@ Feature: Shopping Cart
     And I click on element with css "button[type='submit'].search-box-button"
     Then I wait for element with css ".product-item" to be present
     When I click on element with css ".product-title a"
-    Then I wait for element with id "add-to-cart-button" to be present
-    When I click on element with id "add-to-cart-button"
+    Then I wait for element with css "button.add-to-cart-button" to be present
+    When I click on element with css "button.add-to-cart-button"
     Then I wait for 3 seconds
     When I click on element with id "topcartlink"
     Then I wait for element with css "button.remove-btn" to be present
@@ -94,8 +94,8 @@ Feature: Shopping Cart
     And I click on element with css "button[type='submit'].search-box-button"
     Then I wait for element with css ".product-item" to be present
     When I click on element with css ".product-title a"
-    Then I wait for element with id "add-to-cart-button" to be present
-    When I click on element with id "add-to-cart-button"
+    Then I wait for element with css "button.add-to-cart-button" to be present
+    When I click on element with css "button.add-to-cart-button"
     Then I wait for 3 seconds
     When I click on element with id "topcartlink"
     Then I wait for element with css ".order-total .value-summary" to be present
