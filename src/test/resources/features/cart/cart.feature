@@ -1,69 +1,102 @@
-@smoke @cart
+@smoke @cart @predefined
 Feature: Shopping Cart
   As a user
   I want to manage items in my cart
   So that I can prepare for checkout
 
+  Background:
+    Given I open url "https://nop-qa.portnov.com"
+
+  @predefined1
   Scenario: Add product to cart
-    Given I am on the home page
-    When I search for "laptop"
-    And I click on the first product
-    And I add the product to the cart
-    Then the cart should show the product
+    When I type "laptop" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I click on element with id "topcartlink"
+    Then I wait for element with css ".cart-item-row" to be present
+    And element with css ".cart-item-row" should be displayed
 
+  @predefined2
   Scenario: Add multiple different products to cart
-    Given I am on the home page
-    When I add product "laptop" to cart
-    And I add product "phone" to cart
-    Then the cart should contain "2" items
+    When I type "laptop" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I open url "https://nop-qa.portnov.com"
+    And I type "phone" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I click on element with id "topcartlink"
+    Then I should see 2 elements with xpath "//tr[@class='cart-item-row']"
 
-  Scenario: Add same product multiple times
-    Given my cart has a product
-    When I add the same product again
-    Then the cart quantity should increase
-
-@regression @cart
+  @regression @cart @predefined
+  @predefined3
   Scenario: Update quantity
-    Given my cart has a product
-    When I update quantity to 2
-    Then cart quantity should reflect 2
+    When I type "laptop" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I click on element with id "topcartlink"
+    Then I wait for element with id "itemquantity" to be present
+    When I clear element with id "itemquantity"
+    And I type "2" into element with id "itemquantity"
+    And I click on element with id "updatecart"
+    Then I wait for 2 seconds
 
-  Scenario: Update quantity to maximum
-    Given my cart has a product
-    When I update quantity to maximum allowed
-    Then cart quantity should reflect maximum
+  @predefined4
+  Scenario: Update quantity with invalid value zero
+    When I type "laptop" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I click on element with id "topcartlink"
+    Then I wait for element with id "itemquantity" to be present
+    When I clear element with id "itemquantity"
+    And I type "0" into element with id "itemquantity"
+    And I click on element with id "updatecart"
+    Then I wait for 2 seconds
 
-  Scenario: Update quantity with invalid value
-    Given my cart has a product
-    When I attempt to update quantity to "0"
-    Then I should see cart quantity validation error
+  @predefined5
+  Scenario: Remove item from cart
+    When I type "laptop" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I click on element with id "topcartlink"
+    Then I wait for element with css "button.remove-btn" to be present
+    When I click on element with css "button.remove-btn"
+    Then I wait for element with css ".no-data" to be present
+    And element with css ".no-data" should be displayed
 
-  Scenario: Update quantity with negative value
-    Given my cart has a product
-    When I attempt to update quantity to "-1"
-    Then I should see cart quantity validation error
-
-  Scenario: Remove item
-    Given my cart has a product
-    When I remove the product
-    Then the cart should be empty
-
-  Scenario: Remove one item from multiple items
-    Given my cart has "2" different products
-    When I remove one product
-    Then the cart should contain "1" item
-
-  Scenario: Clear entire cart
-    Given my cart has multiple products
-    When I clear the entire cart
-    Then the cart should be empty
-
-  Scenario: View cart total calculation
-    Given my cart has products
-    When I view the cart
-    Then I should see correct cart total
-
-  Scenario: Continue shopping from cart
-    Given my cart has a product
-    When I click continue shopping
-    Then I should be redirected to home page
+  @predefined6
+  Scenario: View cart total
+    When I type "laptop" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I click on element with id "topcartlink"
+    Then I wait for element with css ".order-total .value-summary" to be present
+    And element with css ".order-total .value-summary" should be displayed

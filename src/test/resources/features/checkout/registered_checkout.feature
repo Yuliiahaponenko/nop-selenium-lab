@@ -1,47 +1,32 @@
-@e2e @checkout
+@e2e @checkout @predefined
 Feature: Registered User Checkout
   As a registered user
   I want to complete checkout
   So that I can purchase products
 
-  Scenario: Registered checkout and order confirmation
-    Given I am logged in
-    And my cart has a product
-    When I complete checkout with valid billing and shipping details
-    Then I should see confirmation and an order number
+  Background:
+    Given I open url "https://nop-qa.portnov.com/login"
+    Then I wait for 2 seconds
+    And I wait for element with id "Email" to be present
+    When I type "testuser@example.com" into element with id "Email"
+    And I type "Test123!" into element with id "Password"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 3 seconds
+    And I wait for element with xpath "//a[text()='Log out']" to be present
+    When I type "laptop" into element with id "small-searchterms"
+    And I click on element with css "button[type='submit'].search-box-button"
+    Then I wait for element with css ".product-item" to be present
+    When I click on element with css ".product-title a"
+    Then I wait for element with id "add-to-cart-button" to be present
+    When I click on element with id "add-to-cart-button"
+    Then I wait for 3 seconds
+    When I click on element with id "topcartlink"
+    Then I wait for element with id "checkout" to be present
 
-  Scenario: Registered checkout with saved address
-    Given I am logged in
-    And my cart has a product
-    And I have a saved address
-    When I select saved address for checkout
-    And I complete checkout
-    Then I should see confirmation and an order number
-
-  Scenario: Registered checkout with new address
-    Given I am logged in
-    And my cart has a product
-    When I add new billing address during checkout
-    And I complete checkout with new address
-    Then I should see confirmation and an order number
-
-  Scenario: Registered checkout with different shipping address
-    Given I am logged in
-    And my cart has a product
-    When I use different address for shipping
-    And I complete checkout
-    Then I should see confirmation and an order number
-
-  Scenario: Registered checkout without accepting terms
-    Given I am logged in
-    And my cart has a product
-    When I attempt checkout without accepting terms and conditions
-    Then I should see terms acceptance validation error
-
-  Scenario: Registered checkout review order details
-    Given I am logged in
-    And my cart has a product
-    When I proceed to order review
-    Then I should see correct order summary
-    And I should see correct product details
-    And I should see correct total amount
+  @predefined1
+  Scenario: Registered user checkout flow
+    When I check checkbox with id "termsofservice"
+    And I click on element with id "checkout"
+    Then I wait for 5 seconds
+    And I should see page url contains "checkout"

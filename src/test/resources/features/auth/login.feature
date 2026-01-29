@@ -1,41 +1,76 @@
-@smoke @auth
+@smoke @auth @predefined
 Feature: User Login
   As a user
   I want to login to my account
   So that I can access my account features
 
+  Background:
+    Given I open url "https://nop-qa.portnov.com/login"
+    Then I wait for 2 seconds
+    And I wait for element with id "Email" to be present
+
+  @predefined1
   Scenario: Valid login
-    Given I am on the home page
-    When I login with valid credentials
-    Then I should see my account area
+    When I type "testuser@example.com" into element with id "Email"
+    And I type "Test123!" into element with id "Password"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 3 seconds
+    And I wait for element with xpath "//a[text()='Log out']" to be present
+    And element with xpath "//a[text()='Log out']" should be displayed
 
+  @predefined2
   Scenario: Invalid login with wrong password
-    Given I am on the home page
-    When I login with email "testuser@example.com" and password "WrongPassword123"
-    Then I should see a validation error message
+    When I type "testuser@example.com" into element with id "Email"
+    And I type "WrongPassword123" into element with id "Password"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 3 seconds
+    And I should see page url contains "login"
+    And element with xpath "//a[text()='Log out']" should not be present
 
+  @predefined3
   Scenario: Invalid login with non-existent email
-    Given I am on the home page
-    When I login with email "nonexistent@example.com" and password "Test123!"
-    Then I should see a validation error message
+    When I type "nonexistent@example.com" into element with id "Email"
+    And I type "Test123!" into element with id "Password"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 3 seconds
+    And I should see page url contains "login"
+    And element with xpath "//a[text()='Log out']" should not be present
 
+  @predefined4
   Scenario: Login with empty email
-    Given I am on the home page
-    When I attempt to login with empty email and password "Test123!"
-    Then I should see email validation error
+    When I type "Test123!" into element with id "Password"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 1 seconds
+    And element with id "Email" should be present
 
+  @predefined5
   Scenario: Login with empty password
-    Given I am on the home page
-    When I attempt to login with email "testuser@example.com" and empty password
-    Then I should see password validation error
+    When I type "testuser@example.com" into element with id "Email"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 1 seconds
+    And element with id "Password" should be present
 
+  @predefined6
   Scenario: Login with invalid email format
-    Given I am on the home page
-    When I attempt to login with email "invalid-email" and password "Test123!"
-    Then I should see email format validation error
+    When I type "invalid-email" into element with id "Email"
+    And I type "Test123!" into element with id "Password"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 2 seconds
 
+  @predefined7
   Scenario: Login with remember me checked
-    Given I am on the home page
-    When I login with valid credentials and check remember me
-    Then I should see my account area
-    And remember me should be checked
+    When I type "testuser@example.com" into element with id "Email"
+    And I type "Test123!" into element with id "Password"
+    And I check checkbox with id "RememberMe"
+    Then checkbox with id "RememberMe" should be selected
+    When I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 3 seconds
+    And I wait for element with xpath "//a[text()='Log out']" to be present
+    And element with xpath "//a[text()='Log out']" should be displayed

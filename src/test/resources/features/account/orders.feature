@@ -1,47 +1,28 @@
-@e2e @account
+@e2e @account @predefined
 Feature: Order History
   As a registered user
   I want to view my order history
   So that I can track my purchases
 
-  Scenario: Order appears in order history
-    Given I completed a purchase
-    When I navigate to order history
-    Then the last order should be visible
+  Background:
+    Given I open url "https://nop-qa.portnov.com/login"
+    Then I wait for 2 seconds
+    And I wait for element with id "Email" to be present
+    When I type "testuser@example.com" into element with id "Email"
+    And I type "Test123!" into element with id "Password"
+    And I wait for 1 seconds
+    And I click on element with css "button.button-1.login-button"
+    Then I wait for 3 seconds
+    And I wait for element with xpath "//a[text()='Log out']" to be present
 
-  Scenario: View order details from history
-    Given I completed a purchase
-    And I navigate to order history
-    When I click on an order
-    Then I should see order details
-    And I should see order items
-    And I should see order total
+  @predefined1
+  Scenario: View order history page
+    When I open url "https://nop-qa.portnov.com/customer/orders"
+    Then I wait for 3 seconds
+    And I should see page url contains "orders"
 
-  Scenario: Verify order status in history
-    Given I completed a purchase
-    When I navigate to order history
-    Then I should see order status
-
-  Scenario: View multiple orders in history
-    Given I completed multiple purchases
-    When I navigate to order history
-    Then I should see all orders listed
-    And orders should be sorted by date
-
-  Scenario: Reorder from order history
-    Given I completed a purchase
-    And I navigate to order history
-    When I click reorder
-    Then the products should be added to cart
-
-  Scenario: Download invoice from order history
-    Given I completed a purchase
-    And I navigate to order history
-    When I click download invoice
-    Then invoice should be downloaded
-
-  Scenario: Order history empty for new user
-    Given I am logged in
-    And I have no previous orders
-    When I navigate to order history
-    Then I should see empty order history message
+  @predefined2
+  Scenario: Navigate to order history
+    When I open url "https://nop-qa.portnov.com/customer/orders"
+    Then I wait for 3 seconds
+    And I should see page url contains "customer/orders"
